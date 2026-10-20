@@ -17,6 +17,9 @@ void setup() {
   addObservation(1, "Pin", "Home");
   addObservation(1, "Smooth", "Outside");
   addObservation(1, "Pin", "University");
+  addObservation(2, "Rewrap", "Home");
+  addObservation(2, "Tighten", "Outside");
+  addObservation(3, "Smooth", "University");
 }
 
 void draw() {
