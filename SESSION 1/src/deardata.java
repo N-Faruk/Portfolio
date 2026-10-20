@@ -1,4 +1,3 @@
-
 /*
   THE LITTLE ADJUSTMENTS - Dear Data 100
   Each mark represents one real hijab adjustment.
