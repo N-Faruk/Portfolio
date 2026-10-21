@@ -1,128 +1,100 @@
-/*
-  THE LITTLE ADJUSTMENTS - Dear Data 100
-  Each mark represents one real hijab adjustment.
-  Colour = adjustment type; thickness = daily frequency.
-*/
+//THE LITTLE ADJUSTMENTS - Dear Data 100
 
 ArrayList<Adjustment> data = new ArrayList<Adjustment>();
-color[] colours = {
-  #B58BC1, #E9A18A, #819C8C, #83A8C8, #E8D18A
-};
 
 void setup() {
-  size(1100, 850);
-  smooth();
-
+  size(800, 800);
+  noLoop(); 
+  
 
   addObservation(1, "Pin", "Home");
-  addObservation(1, "Smooth", "Outside");
-  addObservation(1, "Pin", "University");
+  addObservation(1, "Smooth", "Outside"); 
+  addObservation(1, "Pin", "University"); 
   addObservation(2, "Rewrap", "Home");
   addObservation(2, "Tighten", "Outside");
   addObservation(3, "Smooth", "University");
+  addObservation(4, "Tighten", "Home");
+  addObservation(4, "Rewrap", "University");
+  addObservation(4, "Tuck", "Outside"); 
+  addObservation(4, "Smooth", "Home");
 }
 
 void draw() {
-  background(#F8F1E8);
-  drawTitle();
-  drawSpiral();
-  drawLegend();
+  background(248, 245, 240); 
+  
+  randomSeed(100); 
+  
+  for (int i = 0; i < data.size(); i++) {
+    Adjustment a = data.get(i);
+    
+    // styling based on the adjustment type
+    if (a.type.equals("Pin")) {
+      fill(140, 110, 170, 40); // Translucent Purple
+      stroke(140, 110, 170, 180);
+    } else if (a.type.equals("Smooth")) {
+      fill(230, 150, 130, 40); // Warm Coral
+      stroke(230, 150, 130, 180);
+    } else if (a.type.equals("Rewrap")) {
+      fill(120, 150, 130, 40); // Sage Green
+      stroke(120, 150, 130, 180);
+    } else if (a.type.equals("Tighten")) {
+      fill(100, 140, 180, 40); // Soft Blue
+      stroke(100, 140, 180, 180);
+    } else {
+      fill(220, 200, 120, 40); //  Mustard Yellow (for any other type)
+      stroke(220, 200, 120, 180);
+    }
+
+    // METHOD USE: Get the number of total adjustments recorded for this specific day
+    int dailyCount = countAdjustmentsForDay(a.day);
+    
+    // fabric stroke thickness reflect how busy that day was!
+    strokeWeight(1.0 + (dailyCount * 1.5));
+    
+    // organic fabric shapes
+    beginShape();
+    float startY = random(100, 700);
+    float endY = random(100, 700);
+    
+    vertex(0, startY);
+    bezierVertex(width * 0.3, startY - 150, width * 0.7, endY + 150, width, endY);
+    vertex(width, endY + random(50, 150)); 
+    bezierVertex(width * 0.7, endY + 250, width * 0.3, startY + 50, 0, startY + 100);
+    endShape(CLOSE);
+    
+    if (a.type.equals("Pin")) {
+      fill(40);
+      noStroke();
+      ellipse(width * 0.3, startY - 20, 8, 8);
+    }
+  }
 }
 
-// Add one observation to the dataset
+//  method to accept the day parameter
 void addObservation(int day, String type, String place) {
   data.add(new Adjustment(day, type, place));
 }
 
-void drawTitle() {
-  fill(#39343A);
-  textSize(30);
-  text("The Little Adjustments", 35, 45);
-  textSize(14);
-  text(data.size() + " observations collected", 38, 72);
-}
-
-void drawSpiral() {
-  if (data.size() == 0) return;
-
-  float cx = 425, cy = 430;
-  float turns = 4.1, maxR = 330;
-
-  for (int i = 0; i < data.size(); i++) {
-    float t = map(i, 0, 99, 0, TWO_PI * turns);
-    float r = map(i, 0, 99, 12, maxR);
-    float x = cx + r * cos(t);
-    float y = cy + r * sin(t);
-
-    int frequency = countDay(data.get(i).day);
-    float thickness = min(22, 3 + frequency * 2.5);
-
-    stroke(colours[data.get(i).typeIndex()]);
-    strokeWeight(thickness);
-    noFill();
-
-    if (i < data.size() - 1) {
-      float nextT = map(i + 1, 0, 99, 0, TWO_PI * turns);
-      float nextR = map(i + 1, 0, 99, 12, maxR);
-      line(x, y, cx + nextR * cos(nextT),
-           cy + nextR * sin(nextT));
-    }
-
-    noStroke();
-    fill(colours[data.get(i).typeIndex()]);
-    ellipse(x, y, 7, 7);
-  }
-  strokeWeight(1);
-}
-
-int countDay(int day) {
+// METHOD: Counts all adjustments made on a specific day number
+int countAdjustmentsForDay(int dayNum) {
   int total = 0;
-  for (Adjustment a : data) {
-    if (a.day == day) total++;
+  for (int i = 0; i < data.size(); i++) {
+    Adjustment current = data.get(i);
+    if (current.day == dayNum) {
+      total++;
+    }
   }
   return total;
 }
 
-void drawLegend() {
-  String[] labels = {
-    "Pin", "Smooth", "Rewrap", "Tighten", "Loosen"
-  };
-
-  fill(#39343A);
-  textSize(17);
-  text("Adjustment type", 830, 125);
-
-  for (int i = 0; i < labels.length; i++) {
-    fill(colours[i]);
-    noStroke();
-    ellipse(845, 165 + i * 43, 19, 19);
-    fill(#39343A);
-    textSize(14);
-    text(labels[i], 865, 170 + i * 43);
-  }
-
-  text("Observations: " + data.size(), 830, 410);
-  text("Thicker = more adjustments", 830, 440);
-  text("on that day.", 830, 460);
-  text("Goal: 100 observations", 830, 500);
-}
-
+// Custom data container class
 class Adjustment {
-  int day;
+  int day; // Storing the day number inside the object
   String type, place;
-
+  
   Adjustment(int d, String t, String p) {
     day = d;
     type = t;
     place = p;
   }
-
-  int typeIndex() {
-    if (type.equals("Pin")) return 0;
-    if (type.equals("Smooth")) return 1;
-    if (type.equals("Rewrap")) return 2;
-    if (type.equals("Tighten")) return 3;
-    return 4;
-  }
 }
-
