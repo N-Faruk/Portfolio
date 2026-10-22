@@ -12,11 +12,15 @@ void setup() {
   addObservation(1, "Pin", "University"); 
   addObservation(2, "Rewrap", "Home");
   addObservation(2, "Tighten", "Outside");
-  addObservation(3, "Smooth", "University");
+  addObservation(3, "Smooth", "Home");
   addObservation(4, "Tighten", "Home");
   addObservation(4, "Rewrap", "University");
   addObservation(4, "Tuck", "Outside"); 
   addObservation(4, "Smooth", "Home");
+  addObservation(5, "Tighten", "Home");
+  addObservation(5, "Rewrap", "University");
+  addObservation(5, "Tuck", "Outside"); 
+  addObservation(5, "Smooth", "Home");
 }
 
 void draw() {
