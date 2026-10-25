@@ -21,6 +21,14 @@ void setup() {
   addObservation(5, "Rewrap", "University");
   addObservation(5, "Tuck", "Outside"); 
   addObservation(5, "Smooth", "Home");
+  addObservation(6, "Tighten", "Home");
+  addObservation(6, "Rewrap", "University");
+  addObservation(6, "Tuck", "Outside"); 
+  addObservation(6, "Smooth", "Home");
+  addObservation(7, "Rewrap", "Home");
+  addObservation(7, "Tighten", "Outside");
+  addObservation(8, "Smooth", "Home");
+
 }
 
 void draw() {
