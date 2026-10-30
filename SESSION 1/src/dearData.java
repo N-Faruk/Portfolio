@@ -28,6 +28,11 @@ void setup() {
   addObservation(7, "Rewrap", "Home");
   addObservation(7, "Tighten", "Outside");
   addObservation(8, "Smooth", "Home");
+  addObservation(9, "Tighten", "Home");
+  addObservation(9, "Rewrap", "University");
+  addObservation(9, "Tuck", "Outside");
+  addObservation(9, "Smooth", "Home");
+
 
 }
 
