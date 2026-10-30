@@ -32,7 +32,13 @@ void setup() {
   addObservation(9, "Rewrap", "University");
   addObservation(9, "Tuck", "Outside");
   addObservation(9, "Smooth", "Home");
-
+  addObservation(10, "Tighten", "Home");
+  addObservation(10, "Rewrap", "University");
+  addObservation(10, "Tuck", "Outside");
+  addObservation(10, "Smooth", "Home");
+  addObservation(11, "Rewrap", "Home");
+  addObservation(11, "Tighten", "Outside");
+  addObservation(12, "Smooth", "Home");
 
 }
 
