@@ -1,3 +1,4 @@
+
 ArrayList<Adjustment> data = new ArrayList<Adjustment>();
 
 String[] types = {"Pin", "Smooth", "Rewrap", "Tighten", "Tuck"};
@@ -9,6 +10,9 @@ color[] typeColors = {
   color(100,140,180),
   color(220,200,120)
 };
+
+// Controls whether the key is visible
+boolean showKey = true;
 
 void setup() {
   size(800, 500);
@@ -114,8 +118,19 @@ void draw() {
     text("D" + d, currentX + barWidth / 2, chartY + 12);
   }
 
-  // Draws the colour and location legends
-  drawSimpleKey(chartX, 35, chartWidth);
+  // Only draws the key when showKey is true
+  if (showKey) {
+    drawSimpleKey(chartX, 35, chartWidth);
+  }
+}
+
+
+// Checks if the K key has been pressed
+void keyPressed() {
+  if (key == 'k' || key == 'K') {
+    showKey = !showKey;
+    redraw();
+  }
 }
 
 
